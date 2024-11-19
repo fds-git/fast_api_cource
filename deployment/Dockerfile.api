@@ -1,0 +1,16 @@
+FROM python:3.12.7-slim
+
+ARG POETRY_VERSION=1.8.3
+RUN apt-get update && apt-get install -y --no-install-recommends wget nano
+
+RUN pip install --upgrade pip && \
+    pip install "poetry==${POETRY_VERSION}" && \
+    python -m poetry config virtualenvs.create false
+
+WORKDIR /workspaces/fast_api_cource
+COPY pyproject.toml poetry.lock ./ 
+
+# Установить зависимости из всех групп (заменить на только для api)
+RUN python -m poetry install --no-interaction --no-ansi --no-cache -vvv
+COPY app app
+COPY alembic.ini ./

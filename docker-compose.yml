@@ -1,0 +1,48 @@
+networks:
+  network:
+
+
+services:
+  main:
+    image: ${API_NAME}:${API_VERSION}
+    container_name: ${API_NAME}
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile.api
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - type: bind
+        source: ./configs
+        target: /workdir/configs
+      - type: bind
+        source: ./log/${API_NAME}
+        target: /var/log
+    networks:
+      - network
+    ports:
+      - ${API_PORT}:${APP_PORT}
+    depends_on:
+       - postgres
+    #  - redis
+
+    command: python -m poetry run uvicorn --host 0.0.0.0 --port ${APP_PORT} --log-config ${LOG_CONFIG} ${APP_MODULE}
+  
+  postgres:
+    image: postgres:latest
+    container_name: ${POSTGRES_HOST}
+    env_file:
+      - .env
+    expose:
+      - ${POSTGRES_PORT}
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    networks:
+      - network
+    restart: always
+
+
+
+volumes:
+  postgresdata:
