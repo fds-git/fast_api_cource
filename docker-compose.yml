@@ -19,6 +19,9 @@ services:
       - type: bind
         source: ./log/${API_NAME}
         target: /var/log
+      - type: bind
+        source: ./app/migrations
+        target: /workspaces/fast_api_cource/app/migrations
     networks:
       - network
     ports:
@@ -29,6 +32,7 @@ services:
 
     command: python -m poetry run uvicorn --host 0.0.0.0 --port ${APP_PORT} --log-config ${LOG_CONFIG} ${APP_MODULE}
   
+
   postgres:
     image: postgres:latest
     container_name: ${POSTGRES_HOST}
@@ -42,6 +46,24 @@ services:
       - network
     restart: always
 
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:8.13
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - ./docker-data/pgadmin-data:/var/lib/pgadmin
+    user: '$UID:$GID'
+    ports:
+      - ${PGADMIN_PORT}:80
+    networks:
+      - network
+    restart: unless-stopped
 
 
 volumes:

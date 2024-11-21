@@ -1,8 +1,0 @@
-2024-11-19 UTC 11:53:33.084 [1] [uvicorn.error] server.py:82 [INFO] - Started server process [1]
-2024-11-19 UTC 11:53:33.084 [1] [uvicorn.error] on.py:48 [INFO] - Waiting for application startup.
-2024-11-19 UTC 11:53:33.085 [1] [uvicorn.error] on.py:62 [INFO] - Application startup complete.
-2024-11-19 UTC 11:53:33.086 [1] [uvicorn.error] server.py:214 [INFO] - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-2024-11-19 UTC 11:54:35.220 [1] [uvicorn.error] server.py:262 [INFO] - Shutting down
-2024-11-19 UTC 11:54:35.321 [1] [uvicorn.error] on.py:67 [INFO] - Waiting for application shutdown.
-2024-11-19 UTC 11:54:35.322 [1] [uvicorn.error] on.py:76 [INFO] - Application shutdown complete.
-2024-11-19 UTC 11:54:35.322 [1] [uvicorn.error] server.py:92 [INFO] - Finished server process [1]
