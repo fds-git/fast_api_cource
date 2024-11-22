@@ -9,3 +9,6 @@ build:
 
 clear:
 	find ./log -type f -delete
+
+mig:
+	docker exec -it api alembic upgrade head

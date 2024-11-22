@@ -30,3 +30,16 @@ psql -u postgres -p postgres
 Посмотреть все таблицы - \dt
 Либо через pgadmin (вкладка браузера должна быть открыта после подъема контейнера)
 127.0.0.1:5050
+
+Если после подъема сервисов с нуля команда создания новой миграции
+docker exec -it api alembic revision --autogenerate -m "Add tables"
+выдает ошибку: 
+FAILED: Target database is not up to date.
+То надо сначала прогнать все миграции: make mig, создать новую миграцию 
+docker exec -it api alembic revision --autogenerate -m "Add tables"
+А потом допрогнать: make mig
+
+Тестовые данные вставить через pgadmin (запросы находятся в extra/test_data.sql)
+
+TODO: как после make down -> make up сохранять данные из БД
+разобраться в параметрах запуска postgres внутри контейнера
